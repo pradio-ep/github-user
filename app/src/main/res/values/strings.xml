@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">Github User</string>
+    <string name="favorite_list">Favorite</string>
+    <string name="search">Input Username</string>
+    <string name="user_name">Username</string>
+    <string name="no_data_available">Data not found</string>
+    <string name="slogan">"Let\'s build from here"</string>
 </resources>
