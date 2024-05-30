@@ -4,5 +4,13 @@
     <string name="search">Input Username</string>
     <string name="user_name">Username</string>
     <string name="no_data_available">Data not found</string>
-    <string name="slogan">"Let\'s build from here"</string>
+    <string name="repo_title">Repository</string>
+    <string name="follower_title">Followers</string>
+    <string name="following_title">Following</string>
+    <string name="user">User</string>
+    <string name="no_bio">No Bio</string>
+    <string name="follower_placeholder">100</string>
+    <string name="following_placeholder">100</string>
+    <string name="repos_name">Repos Name</string>
+    <string name="description">Description</string>
 </resources>

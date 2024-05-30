@@ -54,4 +54,28 @@ class UserRepositoryImpl @Inject constructor(
             }
         }.flowOn(Dispatchers.IO)
     }
+
+    override suspend fun getUserFollowers(username: String): Flow<ResultState<List<UserFollower>>> {
+        return flow {
+            try {
+                val response = networkService.getFollowerUser(username)
+                val parseData = UserFollower.parse(response)
+                emit(ResultState.Success(parseData))
+            } catch (e: Exception) {
+                emit(ResultState.Error(e.toString(), 500))
+            }
+        }.flowOn(Dispatchers.IO)
+    }
+
+    override suspend fun getUserFollowing(username: String): Flow<ResultState<List<UserFollowing>>> {
+        return flow {
+            try {
+                val response = networkService.getFollowingUser(username)
+                val parseData = UserFollowing.parse(response)
+                emit(ResultState.Success(parseData))
+            } catch (e: Exception) {
+                emit(ResultState.Error(e.toString(), 500))
+            }
+        }.flowOn(Dispatchers.IO)
+    }
 }

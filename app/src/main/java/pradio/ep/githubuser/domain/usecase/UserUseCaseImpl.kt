@@ -17,4 +17,10 @@ class UserUseCaseImpl @Inject constructor(
 
     override suspend fun getUserRepo(username: String) =
         userRepository.getUserRepo(username)
+
+    override suspend fun getUserFollowers(username: String) =
+        userRepository.getUserFollowers(username)
+
+    override suspend fun getUserFollowing(username: String) =
+        userRepository.getUserFollowing(username)
 }

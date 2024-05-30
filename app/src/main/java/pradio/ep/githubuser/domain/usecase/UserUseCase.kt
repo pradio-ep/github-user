@@ -8,4 +8,6 @@ interface UserUseCase {
     suspend fun getUser(username : String) : Flow<ResultState<List<UserSearch>>>
     suspend fun getUserDetail(username : String) : Flow<ResultState<UserDetail>>
     suspend fun getUserRepo(username : String) :  Flow<ResultState<List<UserRepo>>>
+    suspend fun getUserFollowers(username : String) : Flow<ResultState<List<UserFollower>>>
+    suspend fun getUserFollowing(username : String) :  Flow<ResultState<List<UserFollowing>>>
 }

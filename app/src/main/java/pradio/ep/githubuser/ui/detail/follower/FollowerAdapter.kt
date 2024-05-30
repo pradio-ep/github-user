@@ -1,4 +1,4 @@
-package pradio.ep.githubuser.ui.home
+package pradio.ep.githubuser.ui.detail.follower
 
 import android.content.Context
 import android.content.Intent
@@ -8,52 +8,45 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import pradio.ep.githubuser.R
 import pradio.ep.githubuser.databinding.ItemRowUserBinding
-import pradio.ep.githubuser.domain.model.UserSearch
+import pradio.ep.githubuser.domain.model.UserFollower
 import pradio.ep.githubuser.ui.detail.UserDetailActivity
 import pradio.ep.githubuser.util.view.load
 
-class MainAdapter(val context: Context) : RecyclerView.Adapter<MainAdapter.ViewHolder>() {
+class FollowerAdapter(private val mContext: Context) :
+    RecyclerView.Adapter<FollowerAdapter.ViewHolder>() {
 
-    private var items = mutableListOf<UserSearch>()
-    private lateinit var mainActivity: MainActivity
+    private var items = mutableListOf<UserFollower>()
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val binding: ItemRowUserBinding = ItemRowUserBinding.bind(itemView)
 
-        fun bind(data: UserSearch) {
+        fun bind(data: UserFollower) {
             binding.apply {
                 ivUser.load(data.avatarUrl)
-                binding.txtUsername.text = data.login
+                txtUsername.text = data.login
             }
             with(itemView) {
                 setOnClickListener {
                     context.startActivity(
-                        Intent(context, UserDetailActivity::class.java).apply {
+                        Intent(
+                            context,
+                            UserDetailActivity::class.java
+                        ).apply {
                             putExtra(UserDetailActivity.USERNAME_KEY, data.login)
-                        }
-                    )
+                        })
                 }
             }
         }
     }
 
-    override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): ViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(
-            LayoutInflater.from(context).inflate(R.layout.item_row_user, viewGroup, false)
+            LayoutInflater.from(mContext).inflate(R.layout.item_row_user, parent, false)
         )
     }
 
-    fun setActivity(activity: MainActivity) {
-        this.mainActivity = activity
-    }
-
-    fun setItems(data: MutableList<UserSearch>) {
+    fun setItems(data: MutableList<UserFollower>) {
         this.items = data
-        notifyDataSetChanged()
-    }
-
-    fun clearItems() {
-        items.clear()
         notifyDataSetChanged()
     }
 

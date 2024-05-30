@@ -15,4 +15,7 @@ interface UserRepository {
 
     suspend fun getUserRepo(username: String) : Flow<ResultState<List<UserRepo>>>
 
+    suspend fun getUserFollowers(username: String) : Flow<ResultState<List<UserFollower>>>
+
+    suspend fun getUserFollowing(username: String) : Flow<ResultState<List<UserFollowing>>>
 }

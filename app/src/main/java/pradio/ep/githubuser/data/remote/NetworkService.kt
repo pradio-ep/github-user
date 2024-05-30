@@ -36,6 +36,24 @@ interface NetworkService {
         @Path("username") username: String
     ) : UserRepoResponse
 
+    /**
+     * Endpoints Followers
+     */
+    @GET("users/{username}/followers")
+    @Headers("Autohorization: token $apiKey")
+    suspend fun getFollowerUser(
+        @Path("username") username: String
+    ) : UserFollowersResponse
+
+    /**
+     * Endpoints Following
+     */
+    @GET("users/{username}/following")
+    @Headers("Autohorization: token $apiKey")
+    suspend fun getFollowingUser(
+        @Path("username") username: String
+    ) : UserFollowingResponse
+
     companion object {
         private const val apiKey: String = BuildConfig.API_KEY
     }
