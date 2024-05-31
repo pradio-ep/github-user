@@ -1,6 +1,9 @@
 package pradio.ep.githubuser.data.remote
 
 import android.content.Context
+import com.chuckerteam.chucker.api.ChuckerCollector
+import com.chuckerteam.chucker.api.ChuckerInterceptor
+import com.chuckerteam.chucker.api.RetentionManager
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import pradio.ep.githubuser.BuildConfig
@@ -21,6 +24,7 @@ object Network {
         return OkHttpClient.Builder()
             .retryOnConnectionFailure(true)
             .addInterceptor(createLoggingInterceptor())
+            .addInterceptor(createChuckerInterceptor(context))
             .pingInterval(30, TimeUnit.SECONDS)
             .readTimeout(30, TimeUnit.SECONDS)
             .connectTimeout(30, TimeUnit.SECONDS)
@@ -30,4 +34,16 @@ object Network {
     private fun createLoggingInterceptor() = HttpLoggingInterceptor().apply {
         level = HttpLoggingInterceptor.Level.BODY
     }
+
+    private fun createChuckerInterceptor(context: Context) = ChuckerInterceptor
+        .Builder(context)
+        .collector(createChuckerCollector(context))
+        .alwaysReadResponseBody(true)
+        .build()
+
+    private fun createChuckerCollector(context: Context) = ChuckerCollector(
+        context = context,
+        showNotification = true,
+        retentionPeriod = RetentionManager.Period.ONE_DAY
+    )
 }
