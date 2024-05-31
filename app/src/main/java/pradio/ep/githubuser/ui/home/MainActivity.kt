@@ -1,5 +1,6 @@
 package pradio.ep.githubuser.ui.home
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.KeyEvent
 import androidx.activity.viewModels
@@ -8,6 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import pradio.ep.githubuser.databinding.ActivityMainBinding
 import pradio.ep.githubuser.domain.model.UserSearch
+import pradio.ep.githubuser.ui.favorite.FavoriteUserActivity
 import pradio.ep.githubuser.util.state.LoadingState
 import pradio.ep.githubuser.util.view.gone
 import pradio.ep.githubuser.util.view.toast
@@ -39,6 +41,9 @@ class MainActivity : AppCompatActivity() {
 
     private fun initToolbar() {
         supportActionBar?.hide()
+        binding.btnFavorite.setOnClickListener {
+            startActivity(Intent(this, FavoriteUserActivity::class.java))
+        }
     }
 
     private fun searchUsers() {

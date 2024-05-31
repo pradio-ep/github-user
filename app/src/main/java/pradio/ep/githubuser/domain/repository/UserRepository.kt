@@ -18,4 +18,15 @@ interface UserRepository {
     suspend fun getUserFollowers(username: String) : Flow<ResultState<List<UserFollower>>>
 
     suspend fun getUserFollowing(username: String) : Flow<ResultState<List<UserFollowing>>>
+
+    /**
+     * Local
+     */
+    fun fetchAllUserFavorite() : Flow<List<UserFavorite>>
+
+    fun getFavoriteUserByUsername(username: String) : Flow<List<UserFavorite>>
+
+    suspend fun addUserToFavDB(userFavorite: UserFavorite)
+
+    suspend fun deleteUserFromFavDB(userFavorite: UserFavorite)
 }

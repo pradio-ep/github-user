@@ -1,16 +1,17 @@
 package pradio.ep.githubuser.domain.repository
 
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.flow.*
+import pradio.ep.githubuser.data.local.dao.UserFavoriteDao
+import pradio.ep.githubuser.data.local.entity.UserFavoriteEntity
 import pradio.ep.githubuser.data.remote.NetworkService
 import pradio.ep.githubuser.domain.model.*
 import pradio.ep.githubuser.util.state.ResultState
 import javax.inject.Inject
 
 class UserRepositoryImpl @Inject constructor(
-    private val networkService: NetworkService
+    private val networkService: NetworkService,
+    private val userFavoriteDao: UserFavoriteDao
 ) : UserRepository {
 
     /**
@@ -77,5 +78,30 @@ class UserRepositoryImpl @Inject constructor(
                 emit(ResultState.Error(e.toString(), 500))
             }
         }.flowOn(Dispatchers.IO)
+    }
+
+    /**
+     * Local
+     */
+    override fun fetchAllUserFavorite(): Flow<List<UserFavorite>> {
+        return userFavoriteDao.fetchAllUsers().map {
+            UserFavorite.parse(it)
+        }
+    }
+
+    override fun getFavoriteUserByUsername(username: String): Flow<List<UserFavorite>> {
+        return userFavoriteDao.getFavByUsername(username).map {
+            UserFavorite.parse(it)
+        }
+    }
+
+    override suspend fun addUserToFavDB(userFavorite: UserFavorite) {
+        val data = UserFavoriteEntity.parse(userFavorite)
+        userFavoriteDao.addUserToFavoriteDB(data)
+    }
+
+    override suspend fun deleteUserFromFavDB(userFavorite: UserFavorite) {
+        val data = UserFavoriteEntity.parse(userFavorite)
+        userFavoriteDao.deleteUserFromFavoriteDB(data)
     }
 }
